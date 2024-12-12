@@ -101,24 +101,4 @@ int part_two() {
   return 0;
 }
 
-struct El {
-  struct El *next;
-  int val;
-};
-
-void add(struct El master, struct El next) { master.next = &next; }
-
-int main() {
-  struct El master;
-  master.val = 0;
-  master.next = NULL;
-  if (master.next == NULL) {
-    struct El new;
-    new.val = 1;
-    new.next = NULL;
-    add(master, new);
-  }
-  printf("%d\n", master.val);
-  printf("%d\n", (*master.next).val);
-  return 0;
-}
+int main() { return 0; }
