@@ -15,7 +15,20 @@ char *delete_char_at(char *string, int char_at) {
   return string;
 }
 
+char *delete_chars(char *string, int range[2]) {
+  int i, j;
+  int len = strlen(string);
+  for (i = j = 0; i < len; i++) {
+    if (i < range[0] || i > range[1]) {
+      string[j++] = string[i];
+    }
+  }
+  string[j] = '\0';
+  return string;
+}
+
 int main() {
+  printf("delete_char_at:\n");
   // from for example reading a file
   char *foo = "hello";
 
@@ -39,5 +52,11 @@ int main() {
 
   // » output: helo «
   printf("%s\n", stack_foo);
+
+  printf("delete_chars:\n");
+  char text[] = "Just MonYuriika";
+  int range[2] = {8, 11};
+  delete_chars(text, range);
+  printf("%s\n", text);
   return 0;
 }
