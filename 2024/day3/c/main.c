@@ -13,17 +13,18 @@ int main() {
   }
 
   regex_t regeex;
-  int value = regcomp(&regeex, "", 0);
+  int value = regcomp(&regeex, "[0-9],[0-9]", 0);
 
   int sum = 0;
   char *token;
   while (fgets(buffer, 1024, pF) != NULL) {
-    token = strtok(buffer, "mul()\n");
+    token = strtok(buffer, "mul\n");
     while (token != NULL) {
+      // printf("Bef regex: %s\n", token);
       if (regexec(&regeex, token, 0, NULL, 0) == 0) {
-        printf("%s\n", token);
+        printf("Aft regex: %s\n", token);
       }
-      token = strtok(NULL, "mul()\n");
+      token = strtok(NULL, "mul\n");
     }
   }
   fclose(pF);
