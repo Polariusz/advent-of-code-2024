@@ -91,7 +91,7 @@ long process2(char *line) {
 
 int main() {
   FILE *pF = fopen("../input", "r");
-  char buffer[1024];
+  char buffer[8192];
 
   if (pF == NULL) {
     printf("Unable to open file.\n");
@@ -100,7 +100,7 @@ int main() {
 
   long sum = 0;
   char *token;
-  while (fgets(buffer, 1024, pF) != NULL) {
+  while (fgets(buffer, 8192, pF) != NULL) {
     token = strtok(buffer, "\n");
     while (token != NULL) {
       sum += process2(token);
