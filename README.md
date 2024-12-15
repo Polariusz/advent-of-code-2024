@@ -1,5 +1,5 @@
 # advent-of-code-2024
 2024:
-day 1: **
-day 2: **
-day 3:
+day 1: two
+day 2: two
+day 3: one
