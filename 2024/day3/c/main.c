@@ -39,13 +39,12 @@ int mul(char *token, int index) {
                second_end == -1) {
       continue;
     } else {
-      printf(" f ");
       break;
     }
     if (first_sta != -1 && first_end != -1 && second_sta != -1 &&
         second_end != -1) {
-      printf(" mul(%d-%d,%d-%d) ", first_sta, first_end, second_sta,
-             second_end);
+      // printf(" mul(%d-%d,%d-%d) ", first_sta, first_end, second_sta,
+      // second_end);
       char *first_string = malloc(1 + first_end - first_sta);
       for (int first = first_sta; first < first_end; first++) {
         add_char(first_string, first[line]);
@@ -56,7 +55,7 @@ int mul(char *token, int index) {
         add_char(second_string, second[line]);
       }
 
-      printf(" mul(%s,%s) ", first_string, second_string);
+      // printf(" mul(%s,%s) ", first_string, second_string);
       int first_number = atoi(first_string);
       int second_number = atoi(second_string);
 
@@ -65,26 +64,6 @@ int mul(char *token, int index) {
       break;
     }
   }
-
-  return sum;
-}
-
-long process2(char *line) {
-  char token_arr[strlen(line)];
-  strcpy(token_arr, line);
-
-  printf("[[%s]]: ", token_arr);
-  long sum = 0;
-  int open_braces = -1;
-  for (int i = 3; i < strlen(line); i++) {
-    if (token_arr[i - 3] == 'm' && token_arr[i - 2] == 'u' &&
-        token_arr[i - 1] == 'l' && token_arr[i] == '(') {
-      sum += mul(token_arr, i + 1);
-      open_braces = i;
-      i += 3;
-    }
-  }
-  printf("\n");
 
   return sum;
 }
@@ -100,10 +79,33 @@ int main() {
 
   long sum = 0;
   char *token;
+  char do_it = 1;
+
   while (fgets(buffer, 8192, pF) != NULL) {
     token = strtok(buffer, "\n");
     while (token != NULL) {
-      sum += process2(token);
+
+      int open_braces = -1;
+
+      for (int i = 3; i < strlen(token); i++) {
+        if (token[i - 3] == 'd' && token[i - 2] == 'o' && token[i - 1] == '(' &&
+            token[i] == ')') {
+          do_it = 1;
+        }
+
+        if (i > 6 && token[i - 6] == 'd' && token[i - 5] == 'o' &&
+            token[i - 4] == 'n' && token[i - 3] == '\'' &&
+            token[i - 2] == 't' && token[i - 1] == '(' && token[i] == ')') {
+          do_it = 0;
+        }
+
+        if (do_it == 1 && token[i - 3] == 'm' && token[i - 2] == 'u' &&
+            token[i - 1] == 'l' && token[i] == '(') {
+          sum += mul(token, i + 1);
+          open_braces = i;
+          i += 3;
+        }
+      }
 
       token = strtok(NULL, "\n");
     }
